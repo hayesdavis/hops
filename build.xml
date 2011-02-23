@@ -25,4 +25,17 @@
 			<fileset dir="${build.classes}" />
 		</jar>
 	</target>
+	
+    <target name="hadoop" depends="compile" description="Creates a Hadoop ready jar w/dependencies">
+        <!-- copy Cascading classes and libraries -->
+        <copy todir="${build.classes}/lib">
+            <fileset dir="${lib.dir}" includes="*.jar" />
+        </copy>
+        <copy todir="${build.classes}">
+            <fileset dir="${bin.dir}" />
+        </copy>
+        <jar jarfile="${build.dir}/${ant.project.name}-hadoop.jar">
+            <fileset dir="${build.classes}" />
+        </jar>
+    </target>	
 </project>
