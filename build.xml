@@ -1,0 +1,28 @@
+<project name="cascading-hops" default="build" basedir=".">
+	<property file="${basedir}/version.properties" />
+	
+	<!-- Common ant build properties, included here for completeness -->
+	<property name="src.dir" location="${basedir}/src/java" />
+	<property name="bin.dir" location="${basedir}/bin/java" />
+	<property name="lib.dir" location="${basedir}/lib" />
+	<property name="build.dir" location="${basedir}/build" />
+	<property name="build.classes" location="${build.dir}/bin" />
+
+	<target name="compile" description="compiles the java source">
+		<javac srcdir="${src.dir}" destdir="${bin.dir}" includeAntRuntime="false">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="build" depends="compile" description="Creates a jar">
+		<!-- copy Cascading classes and libraries -->
+		<copy todir="${build.classes}">
+			<fileset dir="${bin.dir}" />
+		</copy>
+		<jar jarfile="${build.dir}/${ant.project.name}-${cascading.hops.version}.jar">
+			<fileset dir="${build.classes}" />
+		</jar>
+	</target>
+</project>
